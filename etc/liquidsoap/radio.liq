@@ -68,13 +68,30 @@ afternoon = nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlist
 dusk =      nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/dusk.m3u"     , mode="normal", conservative=true)))
 night =     nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/night.m3u"    , mode="normal", conservative=true)))
 
+#playlist day
+monday=     nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/monday.m3u"   , mode="random", conservative=true)))
+tuesday=    nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/tuesday.m3u"  , mode="random", conservative=true)))
+wednesday=  nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/wednesday.m3u", mode="random", conservative=true)))
+thursday=   nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/thursday.m3u" , mode="random", conservative=true)))
+friday=     nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/friday.m3u"   , mode="random", conservative=true)))
+saturday=   nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/saturday.m3u" , mode="random", conservative=true)))
+sunday=     nrj(smart_crossfade(playlist(reload=18000, "/media/archivio/playlists/sunday.m3u"   , mode="random", conservative=true)))
+
 smart = switch([
                 ({5h-8h}, dawn),
-                ({8h-12h}, morning),
-                ({12h-14h}, noon),
-                ({14h-18h}, afternoon),
+                ({8h-11h}, morning),
+                ({(1w) and 11h-15h}, monday),
+                ({(2w) and 11h-15h}, tuesday),
+                ({(3w) and 11h-15h}, wednesday),
+                ({(4w) and 11h-15h}, thursday),
+                ({(5w) and 11h-15h}, friday),
+                ({(6w) and 11h-15h}, saturday),
+                ({(7w) and 11h-15h}, sunday),
+               # ({12h-14h}, noon),
+                ({15h-18h}, afternoon),
                 ({18h-20h}, dusk),
-                ({20h-3h}, night)
+                ({20h-3h}, night),
+                ({ 0m 0s-5s }, delay(900.,jingles))
                ])
 
 radio = fallback(track_sensitive = false, 
